@@ -28,9 +28,11 @@ connectDB();
 // Routes
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/projects', projectRoutes)
+app.use('/api/v1/admin', require('./routes/adminRoutes'));
 
 // start server 
-
+console.log('Email User:', process.env.EMAIL_USER);
+console.log('Email Pass:', process.env.EMAIL_PASS);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 

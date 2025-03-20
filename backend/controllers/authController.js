@@ -7,6 +7,10 @@ const { sendVerificationEmail, sendPasswordResetEmail } = require('../utils/emai
 const register = async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
   try {
+    // check if user exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ error: 'Email already exists' });
+    
     const user = new User({ firstName, lastName, email, phone, password });
     await user.save();
 
@@ -73,7 +77,7 @@ const requestPasswordReset = async (req, res) => {
     await user.save();
 
     // Send reset email
-    const resetLink = `http://yourwebsite.com/reset-password?token=${token}`;
+    const resetLink = `${process.env.BASE_URL}/reset-password?token=${token}`
     await sendPasswordResetEmail(email, resetLink);
 
     res.json({ message: 'Password reset link sent' });

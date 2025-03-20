@@ -10,6 +10,19 @@ const getProjects = async (req, res) => {
   }
 };
 
+// get one project
+
+const getProject = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await Project.findById(id);
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+    res.json(project);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // Add a new project
 const addProject = async (req, res) => {
   const { title, description, technologies, githubLink, liveLink, image } = req.body;
@@ -44,4 +57,4 @@ const deleteProject = async (req, res) => {
   }
 };
 
-module.exports = { getProjects, addProject, updateProject, deleteProject };
+module.exports = { getProjects, addProject, getProject, updateProject, deleteProject };

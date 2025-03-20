@@ -5,7 +5,7 @@ const {
   login,
   requestPasswordReset,
   resetPassword,
-} = require('../controllers/authController');
+} = require('../controllers/authController'); // Fix the path and ensure the file exists
 const router = express.Router();
 
 router.post('/register', register);
